@@ -237,13 +237,13 @@ namespace UdemyDownloader
             {
                 using (Stream source = response.GetResponseStream())
                 {
-                    var directory = Utilities.NormalizePath(content.SavedFolder);
+                    var directory = content.SavedFolder;
                     if (!Directory.Exists(directory))
                     {
                         Directory.CreateDirectory(directory);
                     }
 
-                    var filePath = Path.Combine(directory, content.FullName);
+                    var filePath = Utilities.NormalizeFilePath(Path.Combine(directory, content.FullName));
                     using (FileStream target = File.Open(filePath, FileMode.Create, FileAccess.Write))
                     {
                         var buffer = new byte[1024];

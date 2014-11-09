@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.SqlServer.Server;
-
-namespace UdemyDownloader
+﻿namespace UdemyDownloader
 {
     public class DownloadableContent
     {
@@ -13,7 +10,7 @@ namespace UdemyDownloader
         {
             get
             {
-                return string.Format("{0}{1}", Utilities.NormalizePath(this.Title), this.FileExtension);
+                return string.Format("{0}{1}", this.Title, this.FileExtension);
             }
         }
 

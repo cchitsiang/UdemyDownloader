@@ -13,8 +13,9 @@ namespace UdemyDownloader.Tests
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "FilePaths.csv", "FilePaths#CSV", DataAccessMethod.Sequential)]
         public void TestNormalizePath()
         {
-            var path = TestContext.DataRow[0].ToString();
+            var path = Utilities.NormalizeFilePath(TestContext.DataRow[0].ToString());
 
+            Assert.AreEqual(TestContext.DataRow[1].ToString(), path);
 
         }
     }

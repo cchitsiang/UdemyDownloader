@@ -62,6 +62,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UdemyDownloader.Console\UdemyDownloader.Console.csproj">
+      <Project>{f581f6b0-3aec-4b96-a04e-1462ecf6c281}</Project>
+      <Name>UdemyDownloader.Console</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

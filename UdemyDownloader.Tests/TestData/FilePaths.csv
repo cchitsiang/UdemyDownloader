@@ -1,2 +1,5 @@
-﻿FileName,
-2. Introduction.mp4,
+﻿test_filename, expected_result
+C:\test\file.txt, C:\test\file.txt
+C:\test\file?.txt, C:\test\file_.txt
+C:\test/\file?.txt, C:\test\file_.txt
+C:\test\test part 1/2.txt, C:\test\test part 1_2.txt

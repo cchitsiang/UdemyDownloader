@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using UdemyDownloader.Exceptions;
 
 namespace UdemyDownloader
 {
@@ -9,6 +12,8 @@ namespace UdemyDownloader
     {
         static void Main(string[] args)
         {
+            Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
             var username = AppSettings.Username;
             var password = AppSettings.Password;
             var result = CommandLine.Parser.Default.ParseArguments<Options>(args);
@@ -29,14 +34,26 @@ namespace UdemyDownloader
 
                 string courseLink = result.Value.CourseUrl;
 
-                var udemyDownloader = new UdemyDownloader(username, password, downloadFolderPath);
+                try
+                {
+                    var udemyDownloader = new UdemyDownloader(username, password, downloadFolderPath);
 
-                udemyDownloader.Add(courseLink);
-
-                udemyDownloader.ProcessDownloadJobStarted += ProcessDownloadJobStarted;
-                udemyDownloader.ProcessDownloadJobFinished += ProcessDownloadJobFinished;
-                udemyDownloader.ProcessFileStarted += ProcessFileStarted;
-                udemyDownloader.Start();
+                    udemyDownloader.Add(courseLink);
+                    udemyDownloader.ProcessDownloadJobStarted += ProcessDownloadJobStarted;
+                    udemyDownloader.ProcessDownloadJobFinished += ProcessDownloadJobFinished;
+                    udemyDownloader.ProcessFileStarted += ProcessFileStarted;
+                    Console.WriteLine("Download is started...");
+                    udemyDownloader.Start();
+                }
+                catch (MissingCredentialsException ex)
+                {
+                    Console.WriteLine("{0}Please set the credentials in command or app.config", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                   Console.WriteLine("Unexpected error(s) occurred. Exception message: {0}", ex.Message);
+                }
+                
             }
             else
             {
